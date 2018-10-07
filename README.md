@@ -1,5 +1,7 @@
 # SimpleNeuralNetTest
 
+So years ago I got interested in programming because I read about neural networks. This is my first serious attempt at writing one from scratch...
+
 ## Next steps
 1. Make it easier to load values with expected output
 2. Ability to load and save network training (weights)
