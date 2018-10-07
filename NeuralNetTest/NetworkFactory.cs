@@ -39,13 +39,13 @@ namespace NeuralNetTest
 
             for (int i = 0; i < _inputNodeCount; i++)
             {
-                var inputNode = new InputNode(i);
+                var inputNode = new InputNode(new Address(0, i));
                 _inputNodes.Add(inputNode);
             }
             
             for (int i = 0; i < _outPutNodeCount; i++)
             {
-                var outputNode = new OutputNode(i, _activationFunction, _weightAdjustFunction);
+                var outputNode = new OutputNode(new Address(1, i), _activationFunction, _weightAdjustFunction);
                 foreach(var input in InputNodes)
                 {
                     outputNode.AddInputNode(input);

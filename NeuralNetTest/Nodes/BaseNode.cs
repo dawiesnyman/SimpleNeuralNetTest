@@ -8,18 +8,18 @@ namespace NeuralNetTest.Nodes
 {
     public abstract class BaseNode : IBaseNode
     {
-        private readonly int _address;
+        private readonly Address _address;
         private readonly int _layerNo;
 
         public BaseNode()
         {
 
         }
-        public BaseNode(int address)
+        public BaseNode(Address address)
         {
             _address = address;
         }
-        public int Address => _address;
+        public Address Address => _address;
         public int LayerNo => _layerNo;
     }
 }

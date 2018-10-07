@@ -17,6 +17,7 @@ namespace NeuralNetTest.Nodes.Tests
         [TestMethod()]
         public void CalculateOutputStepTest()
         {
+            //dd.Add(, 0.0);
             // 0 0 1 => 0
             // 1 1 1 => 1
             // 1 0 1 => 1
@@ -36,7 +37,7 @@ namespace NeuralNetTest.Nodes.Tests
             };
 
 
-            var outnode = new OutputNode(1, ActivationFunctionFactory.GetFunction(eActivationFunc.Step), weightAdjust);
+            var outnode = new OutputNode(new Address(2, 0), ActivationFunctionFactory.GetFunction(eActivationFunc.Step), weightAdjust);
             outnode.AddInputNodes(inputNodes1);
             outnode.Bias = 0.0;
 
@@ -89,7 +90,7 @@ namespace NeuralNetTest.Nodes.Tests
             inputNodes1.Add(new InputNode(1));// { InValue = 0 });
             inputNodes1.Add(new InputNode(2));// { InValue = 1 });
 
-            var outnode = new OutputNode(1, ActivationFunctionFactory.GetFunction(eActivationFunc.Sigmoid), weightAdjust);
+            var outnode = new OutputNode(new Address(1, 0), ActivationFunctionFactory.GetFunction(eActivationFunc.Sigmoid), weightAdjust);
             outnode.AddInputNodes(inputNodes1);
             outnode.Bias = -2.0;
 
@@ -147,9 +148,9 @@ namespace NeuralNetTest.Nodes.Tests
 
             var hiddenNodes = new List<HiddenNode>()
             {
-                new HiddenNode(0, sigFunction, weightAdjust, getRandom),
-                new HiddenNode(1, sigFunction, weightAdjust, getRandom),
-                new HiddenNode(2, sigFunction, weightAdjust, getRandom)
+                new HiddenNode(new Address(1, 0), sigFunction, weightAdjust, getRandom),
+                new HiddenNode(new Address(1, 1), sigFunction, weightAdjust, getRandom),
+                new HiddenNode(new Address(1, 2), sigFunction, weightAdjust, getRandom)
             };
 
             foreach (var hidden in hiddenNodes)
@@ -157,15 +158,15 @@ namespace NeuralNetTest.Nodes.Tests
                 hidden.AddInputNodes(inputNodes1);
             }
 
-            var outnode = new OutputNode(0, sigFunction, weightAdjust, getRandom);
+            var outnode = new OutputNode(new Address(2, 0), sigFunction, weightAdjust, getRandom);
             outnode.AddInputNodes(hiddenNodes);
             outnode.Bias = -2.0;
 
-            Debug.WriteLine("Node {0} weight:{1}", 0, inputNodes1[0].Weights[0]);
-            Debug.WriteLine("Node {0} weight:{1}", 1, inputNodes1[0].Weights[1]);
+            Debug.WriteLine("Node {0} weight:{1}", 0, inputNodes1[0].Weights["1, 0"]);
+            Debug.WriteLine("Node {0} weight:{1}", 1, inputNodes1[0].Weights["1, 1"]);
 
-            Debug.WriteLine("Node {0} weight:{1}", 0, hiddenNodes[0].Weights[0]);
-            Debug.WriteLine("Node {0} weight:{1}", 0, hiddenNodes[1].Weights[0]);
+            Debug.WriteLine("Node {0} weight:{1}", 0, hiddenNodes[0].Weights["2, 0"]);
+            Debug.WriteLine("Node {0} weight:{1}", 0, hiddenNodes[1].Weights["2, 0"]);
 
 
             for (int x = 0; x < 100000; x++)
@@ -184,12 +185,12 @@ namespace NeuralNetTest.Nodes.Tests
                 outnode.AdjustWeights(0);
             }
 
-            Debug.WriteLine("Node {0} weight:{1}", 0, inputNodes1[0].Weights[0]);
-            Debug.WriteLine("Node {0} weight:{1}", 1, inputNodes1[0].Weights[1]);
+            Debug.WriteLine("Node {0} weight:{1}", 0, inputNodes1[0].Weights["1, 0"]);
+            Debug.WriteLine("Node {0} weight:{1}", 1, inputNodes1[0].Weights["1, 1"]);
 
 
-            Debug.WriteLine("Node {0} weight:{1}", 0, hiddenNodes[0].Weights[0]);
-            Debug.WriteLine("Node {0} weight:{1}", 0, hiddenNodes[1].Weights[0]);
+            Debug.WriteLine("Node {0} weight:{1}", 0, hiddenNodes[0].Weights["2, 0"]);
+            Debug.WriteLine("Node {0} weight:{1}", 0, hiddenNodes[1].Weights["2, 0"]);
 
             outnode.SetInput(new double[] { 1.0, 0.0, 0.0 });
             outnode.CalculateOutput();

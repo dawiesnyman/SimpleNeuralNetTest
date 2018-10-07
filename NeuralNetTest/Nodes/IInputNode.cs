@@ -4,7 +4,7 @@ namespace NeuralNetTest.Nodes
 {
     public interface IInputNode : IBaseNode
     {
-        IDictionary<int, double> Weights { get; }
+        IDictionary<string, double> Weights { get; }
         double Output { get; }
         double Input { get; set; }
 

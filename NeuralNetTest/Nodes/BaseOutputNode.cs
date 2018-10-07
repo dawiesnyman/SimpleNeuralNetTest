@@ -12,7 +12,7 @@ namespace NeuralNetTest.Nodes
         private Func<double, double, double, double> _weightAdjustmentFunction;
         private Func<double> _getRandom;
 
-        public BaseOutputNode(int address, Func<double, double> activationFunction, 
+        public BaseOutputNode(Address address, Func<double, double> activationFunction, 
             Func<double, double, double, double> weightAdjustmentFunction,
             Func<double> getRandom = null) : base(address)
         {
@@ -36,7 +36,7 @@ namespace NeuralNetTest.Nodes
                     o.CalculateOutput();
                 }
 
-                total += (i.Weights[Address] * i.Output);
+                total += (i.Weights[Address.ToString()] * i.Output);
             }
             total += Bias;
 
@@ -47,7 +47,7 @@ namespace NeuralNetTest.Nodes
             double error = expected - Output;
             _inputNodes.ForEach((i) =>
             {
-                i.Weights[Address] += _weightAdjustmentFunction(i.Output, Output, error);
+                i.Weights[Address.ToString()] += _weightAdjustmentFunction(i.Output, Output, error);
 
 
                 var o = i as BaseOutputNode;
@@ -82,7 +82,7 @@ namespace NeuralNetTest.Nodes
         {
             new List<IInputNode>(inputnodes).ForEach((i) =>
             {               
-                i.Weights.Add(Address, _getRandom());
+                i.Weights.Add(Address.ToString(), _getRandom());
             });
 
             _inputNodes.AddRange(inputnodes);
