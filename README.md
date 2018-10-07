@@ -4,7 +4,7 @@ So years ago I got interested in programming because I read about neural network
 
 So far what I have used is the following table of training data:
 
-| Input 1 | Input 2 | Input 2 | Output | 
+| Input 1 | Input 2 | Input 3 | Output | 
 | ------- |:-------:|:-------:| ------:|
 | 0|0|1|0|
 | 1|1|1|1|
@@ -13,10 +13,12 @@ So far what I have used is the following table of training data:
 
 and then test using the following:
 
-| Input 1 | Input 2 | Input 2 | Output | 
+| Input 1 | Input 2 | Input 3 | Output | 
 | ------- |:-------:|:-------:| ------:|
 |   1     |   0     |   0     |   1    |
 |   0     |   0     |   0     |   0    |
+
+As you can see the pattern is that if there is a one in "Input 1"  then the answer should be 1.
 
 ## Next steps
 1. Make it easier to load values with expected output
