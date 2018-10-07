@@ -29,6 +29,13 @@ namespace NeuralNetTest.Nodes
             double total = 0;
             foreach (var i in _inputNodes)
             {
+                var o = i as OutputNode;
+
+                if (o != null)
+                {
+                    o.CalculateOutput();
+                }
+
                 total += (i.Weights[Address] * i.Output);
             }
             total += Bias;
@@ -41,6 +48,14 @@ namespace NeuralNetTest.Nodes
             _inputNodes.ForEach((i) =>
             {
                 i.Weights[Address] += _weightAdjustmentFunction(i.Output, Output, error);
+
+
+                var o = i as BaseOutputNode;
+
+                if (o != null)
+                {
+                    o.AdjustWeights(expected);
+                }
             });
         }
         public IEnumerable<IInputNode> InputNodes => _inputNodes;
@@ -65,10 +80,9 @@ namespace NeuralNetTest.Nodes
 
         public void AddInputNodes(IEnumerable<IInputNode> inputnodes)
         {
-            Random r = new Random();
             new List<IInputNode>(inputnodes).ForEach((i) =>
             {               
-                i.Weights.Add(Address, r.NextDouble());
+                i.Weights.Add(Address, _getRandom());
             });
 
             _inputNodes.AddRange(inputnodes);
