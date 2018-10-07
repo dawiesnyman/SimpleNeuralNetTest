@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace NeuralNetTest.Nodes
 {
@@ -7,10 +8,10 @@ namespace NeuralNetTest.Nodes
         public HiddenNode(int address, Func<double, double> activationFunction, Func<double, double, double, double> weightAdjustmentFunction) 
             : base(address, activationFunction, weightAdjustmentFunction)
         {
-
+            Weights = new Dictionary<int, double>();
         }
 
-        public double Weight { get; set; }
+        public IDictionary<int, double> Weights { get; set; }
         public double Input { get { return Output; } set { Output = value; } }
     }
 }

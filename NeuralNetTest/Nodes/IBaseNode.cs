@@ -9,5 +9,6 @@ namespace NeuralNetTest.Nodes
     public interface IBaseNode
     {
         int Address { get; }
+        int LayerNo { get; }
     }
 }

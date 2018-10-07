@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Activation\ActivationFunctionFactory.cs" />
     <Compile Include="Activation\eActivationFunc.cs" />
+    <Compile Include="Layers\InputLayer.cs" />
     <Compile Include="Network.cs" />
     <Compile Include="NetworkFactory.cs" />
     <Compile Include="Nodes\BaseNode.cs" />
@@ -61,8 +62,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Layers\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -39,7 +39,7 @@ namespace NeuralNetTest
 
             for (int i = 0; i < _inputNodeCount; i++)
             {
-                var inputNode = new InputNode(i, r.NextDouble());
+                var inputNode = new InputNode(i);
                 _inputNodes.Add(inputNode);
             }
             

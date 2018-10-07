@@ -5,13 +5,20 @@ namespace NeuralNetTest.Nodes
 {
     public abstract class BaseOutputNode : BaseNode
     {
+        private readonly Random _random = new Random();
         private readonly List<IInputNode> _inputNodes;
         private readonly List<BaseOutputNode> _outNodes;
         private readonly Func<double, double> _activationFunction;
         private Func<double, double, double, double> _weightAdjustmentFunction;
+        private Func<double> _getRandom;
 
-        public BaseOutputNode(int address, Func<double, double> activationFunction, Func<double, double, double, double> weightAdjustmentFunction) : base(address)
+        public BaseOutputNode(int address, Func<double, double> activationFunction, 
+            Func<double, double, double, double> weightAdjustmentFunction,
+            Func<double> getRandom = null) : base(address)
         {
+            if (getRandom == null) { _getRandom = (() => { return _random.NextDouble(); }); }
+            else { _getRandom = getRandom; }
+
             _activationFunction = activationFunction;
             _weightAdjustmentFunction = weightAdjustmentFunction;
             _inputNodes = new List<IInputNode>();
@@ -22,7 +29,7 @@ namespace NeuralNetTest.Nodes
             double total = 0;
             foreach (var i in _inputNodes)
             {
-                total += (i.Weight * i.Output);
+                total += (i.Weights[Address] * i.Output);
             }
             total += Bias;
 
@@ -33,7 +40,7 @@ namespace NeuralNetTest.Nodes
             double error = expected - Output;
             _inputNodes.ForEach((i) =>
             {
-                i.Weight += _weightAdjustmentFunction(i.Output, Output, error);
+                i.Weights[Address] += _weightAdjustmentFunction(i.Output, Output, error);
             });
         }
         public IEnumerable<IInputNode> InputNodes => _inputNodes;
@@ -58,6 +65,12 @@ namespace NeuralNetTest.Nodes
 
         public void AddInputNodes(IEnumerable<IInputNode> inputnodes)
         {
+            Random r = new Random();
+            new List<IInputNode>(inputnodes).ForEach((i) =>
+            {               
+                i.Weights.Add(Address, r.NextDouble());
+            });
+
             _inputNodes.AddRange(inputnodes);
         }
     }
