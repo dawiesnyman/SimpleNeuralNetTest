@@ -27,9 +27,9 @@ namespace NeuralNetTest
                 return e * i * o * (1 - o);
             });
 
-            var factory = new Network(4, 0, 2, stepActivationFunction, waFunction);
+            //var factory = new Network(4, 0, 2, stepActivationFunction, waFunction);
 
-            factory.BuildNetwork();
+            //factory.BuildNetwork();
 
             //set input
 

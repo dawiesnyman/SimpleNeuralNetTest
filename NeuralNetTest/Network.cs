@@ -19,15 +19,16 @@ namespace NeuralNetTest
         private Func<double> _getRandom;
         private InputLayer _inputNodes;
         private List<HiddenNode>[] _hiddenNodes;
-        private List<BaseOutputNode> _outputNodes;
+        private OutputLayer _outputNodes;
 
         private List<Input> _inputs;
         private Dictionary<int, double[]> _outputs;
 
-        public Network(int inputNodeCount, int outPutNodeCount)
+        public Network(int inputNodeCount, int outPutNodeCount, int hiddenLayerCount = 1, int hiddenNodesPerLayerCount = -1)
         {
             _inputNodeCount = inputNodeCount;
-            _hiddenNodePerLayerCount = inputNodeCount;
+
+            _hiddenNodePerLayerCount = hiddenNodesPerLayerCount == -1 ? inputNodeCount : hiddenNodesPerLayerCount;
             _outPutNodeCount = outPutNodeCount;
             _activationFunction = FunctionFactory.GetActivationFunction(eActivationFunc.Sigmoid);
             _weightAdjustFunction = FunctionFactory.GetWeightAdjustFunction(eWeightAdjustment.Simple);
@@ -38,7 +39,7 @@ namespace NeuralNetTest
 
             _inputNodes = new InputLayer();
             _hiddenNodes = new List<HiddenNode>[_hiddenLayerCount];            
-            _outputNodes = new List<BaseOutputNode>();
+            _outputNodes = new OutputLayer();
         }
 
         public Network(int inputNodeCount, int hiddenNodesPerLayerCount, int hiddenLayerCount, int outPutNodeCount,
@@ -122,18 +123,27 @@ namespace NeuralNetTest
 
             return this;
         }
-
-
+        public Network Split(int trainPercentage)
+        {
+            return this;
+        }
         public Network Train(int cycles)
         {
             for (int x = 0; x < cycles; x++)
             {
-                int index = 0;
-                _outputNodes.ForEach((o) =>
+                _inputs.ForEach((i) =>
                 {
-                    //_inputs.
-                    o.CalculateOutput();
-                    o.AdjustWeights(0);
+                    _inputNodes.SetInput(_inputs[i.ID].InputValues);
+                    _outputNodes.SetExpectedOutput(_inputs[i.ID].OutputValues);
+
+                    int index = 0;
+
+                    _outputNodes.ForEach((o) =>
+                    {
+                        o.CalculateOutput();
+                        o.AdjustWeights(_outputNodes.GetExpectedOutput(index++));
+                    });
+
                 });
             }
 

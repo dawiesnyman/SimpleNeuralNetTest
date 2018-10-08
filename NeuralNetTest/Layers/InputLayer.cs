@@ -35,17 +35,19 @@ namespace NeuralNetTest.Layers
             _inputNodes.Add(inputNode);
         }
 
-        public void SetInput(double[] input)
+        public InputLayer SetInput(double[] input)
         {
             if (input.Length != _inputNodes.Count)
             {
-                throw new Exception("Input array lengt does not equal the input nodes");
+                throw new Exception("Input array length does not equal the input nodes");
             }
 
             for (int i = 0; i < input.Length; i++)
             {
                 _inputNodes[i].Input = input[i];
             }
+
+            return this;
         }
         public IInputNode this[int key]
         {

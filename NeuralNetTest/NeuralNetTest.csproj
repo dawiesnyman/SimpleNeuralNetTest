@@ -48,6 +48,7 @@
     <Compile Include="Functions\eActivationFunc.cs" />
     <Compile Include="Layers\Input.cs" />
     <Compile Include="Layers\InputLayer.cs" />
+    <Compile Include="Layers\OutputLayer.cs" />
     <Compile Include="Network.cs" />
     <Compile Include="Nodes\BaseNode.cs" />
     <Compile Include="Nodes\HiddenNode.cs" />
