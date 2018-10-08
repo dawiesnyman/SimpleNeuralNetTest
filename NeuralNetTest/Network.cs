@@ -1,41 +1,145 @@
-﻿using NeuralNetTest.Nodes;
+﻿using NeuralNetTest.Functions;
+using NeuralNetTest.Layers;
+using NeuralNetTest.Nodes;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NeuralNetTest
 {
     public class Network
     {
-        private List<InputNode> _inputNodes;
-        private List<HiddenNode> _hiddenNodes;
+        private readonly int _inputNodeCount;
+        private readonly int _hiddenNodePerLayerCount;
+        private readonly int _hiddenLayerCount = 1;
+        private readonly int _outPutNodeCount;
+        private readonly Func<double, double> _activationFunction;
+        private readonly Func<double, double, double, double> _weightAdjustFunction;
+        private readonly Random _random = new Random();
+
+        private Func<double> _getRandom;
+        private InputLayer _inputNodes;
+        private List<HiddenNode>[] _hiddenNodes;
         private List<BaseOutputNode> _outputNodes;
 
-        public List<InputNode> InputNodes { get => _inputNodes; set => _inputNodes = value; }
-        public List<HiddenNode> HiddenNodes { get => _hiddenNodes; set => _hiddenNodes = value; }
-        public List<BaseOutputNode> OutputNodes { get => _outputNodes; set => _outputNodes = value; }
+        private List<Input> _inputs;
+        private Dictionary<int, double[]> _outputs;
 
-        public Network()
+        public Network(int inputNodeCount, int outPutNodeCount)
         {
+            _inputNodeCount = inputNodeCount;
+            _hiddenNodePerLayerCount = inputNodeCount;
+            _outPutNodeCount = outPutNodeCount;
+            _activationFunction = FunctionFactory.GetActivationFunction(eActivationFunc.Sigmoid);
+            _weightAdjustFunction = FunctionFactory.GetWeightAdjustFunction(eWeightAdjustment.Simple);
+            _getRandom = (() =>
+            {
+                return _random.NextDouble();
+            });
 
+            _inputNodes = new InputLayer();
+            _hiddenNodes = new List<HiddenNode>[_hiddenLayerCount];            
+            _outputNodes = new List<BaseOutputNode>();
         }
-        public void SetInputs(object[][] input)
-        {
 
+        public Network(int inputNodeCount, int hiddenNodesPerLayerCount, int hiddenLayerCount, int outPutNodeCount,
+            Func<double, double> activationFunction, Func<double, double, double, double> weightAdjustmentFunction)
+            : this(inputNodeCount, outPutNodeCount)
+        {
+            _activationFunction = activationFunction;
+            _weightAdjustFunction = weightAdjustmentFunction;
         }
 
-        public void FeedForward(int count)
+        public Network BuildNetwork()
         {
+            for (int i = 0; i < _inputNodeCount; i++)
+            {
+                var inputNode = new InputNode(i);
+                _inputNodes.Add(inputNode);
+            }
+
+            for (int i = 0; i < _outPutNodeCount; i++)
+            {
+                var outputNode = new OutputNode(i, _activationFunction, _weightAdjustFunction);
+                _outputNodes.Add(outputNode);
+            }
+
+            for (int i = 0; i < _hiddenLayerCount; i++)
+            {
+                _hiddenNodes[i] = new List<HiddenNode>();
+
+                for (int j = 0; j < _hiddenNodePerLayerCount; j++)
+                {
+                    _hiddenNodes[i].Add(new HiddenNode(j, _activationFunction, _weightAdjustFunction, _getRandom));
+                }
+
+                if(i > 0)
+                {
+                    _hiddenNodes[i].ForEach((o) =>
+                    {
+                        o.AddInputNodes(_hiddenNodes[i - 1]);
+                    });
+                }
+            }
+
             _outputNodes.ForEach((o) =>
             {
-                //calc each node in each layer
-                for (int i = 0; i < count; i++)
+                //if hiddenlayercount is 0 or hiddenNode count is 0 connect input to output layer
+                if (_hiddenLayerCount == 0 || _hiddenNodePerLayerCount == 0)
                 {
-
+                    o.AddInputNodes(_inputNodes);
+                }
+                else
+                {
+                    o.AddInputNodes(_hiddenNodes[_hiddenLayerCount - 1]);
                 }
             });
+
+
+
+            return this;
         }
+
+        public Network SetBias(double bias)
+        {
+            for(int i =0; i < _hiddenLayerCount; i++)
+            {
+                _hiddenNodes[i].ForEach((h) =>
+                {
+                    h.Bias = bias;
+                });
+            }
+
+            _outputNodes.ForEach((o) =>
+            {
+                o.Bias = bias;
+            });
+
+            return this;
+        }
+        public Network SetInputs(List<Input> input)
+        {
+            _inputs = input;
+
+            return this;
+        }
+
+
+        public Network Train(int cycles)
+        {
+            for (int x = 0; x < cycles; x++)
+            {
+                int index = 0;
+                _outputNodes.ForEach((o) =>
+                {
+                    //_inputs.
+                    o.CalculateOutput();
+                    o.AdjustWeights(0);
+                });
+            }
+
+            return this;
+        }
+        public IEnumerable<IInputNode> InputNodes => _inputNodes;
+        public IEnumerable<BaseOutputNode> OutputNodes => _outputNodes;
     }
 }

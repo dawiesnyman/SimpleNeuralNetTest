@@ -47,5 +47,16 @@ namespace NeuralNetTest.Layers
                 _inputNodes[i].Input = input[i];
             }
         }
+        public IInputNode this[int key]
+        {
+            get
+            {
+                return _inputNodes[key];
+            }
+            set
+            {
+                _inputNodes[key] = value;
+            }
+        }
     }
 }

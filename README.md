@@ -18,7 +18,7 @@ and then test using the following:
 |   1     |   0     |   0     |   1    |
 |   0     |   0     |   0     |   0    |
 
-As you can see the pattern is that if there is a one in "Input 1"  then the answer should be 1.
+As you can see the pattern is that the answer should be the same as "Input 1".
 
 ## Next steps
 1. Make it easier to load values with expected output
