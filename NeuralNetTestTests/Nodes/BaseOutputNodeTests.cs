@@ -148,6 +148,7 @@ namespace NeuralNetTest.Nodes.Tests
             inputNodes1.Add(new InputNode(0));// { InValue = 0 });
             inputNodes1.Add(new InputNode(1));// { InValue = 0 });
             inputNodes1.Add(new InputNode(2));// { InValue = 1 });
+
             var bias = -2.0;
             var hiddenNodes = new List<HiddenNode>()
             {

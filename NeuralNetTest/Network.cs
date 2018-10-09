@@ -8,10 +8,12 @@ namespace NeuralNetTest
 {
     public class Network
     {
-        private readonly int _inputNodeCount;
-        private readonly int _hiddenNodePerLayerCount;
-        private readonly int _hiddenLayerCount = 1;
-        private readonly int _outPutNodeCount;
+
+        private readonly int _inputNodeInitialCount;
+        private readonly int _hiddenNodePerLayerInitialCount;
+        private readonly int _hiddenLayerInitialCount = 1;
+        private readonly int _outPutNodeInitialCount;
+
         private readonly Func<double, double> _activationFunction;
         private readonly Func<double, double, double, double> _weightAdjustFunction;
         private readonly Random _random = new Random();
@@ -22,14 +24,13 @@ namespace NeuralNetTest
         private OutputLayer _outputNodes;
 
         private List<Input> _inputs;
-        private Dictionary<int, double[]> _outputs;
 
         public Network(int inputNodeCount, int outPutNodeCount, int hiddenLayerCount = 1, int hiddenNodesPerLayerCount = -1)
         {
-            _inputNodeCount = inputNodeCount;
+            _inputNodeInitialCount = inputNodeCount;
 
-            _hiddenNodePerLayerCount = hiddenNodesPerLayerCount == -1 ? inputNodeCount : hiddenNodesPerLayerCount;
-            _outPutNodeCount = outPutNodeCount;
+            _hiddenNodePerLayerInitialCount = hiddenNodesPerLayerCount == -1 ? inputNodeCount : hiddenNodesPerLayerCount;
+            _outPutNodeInitialCount = outPutNodeCount;
             _activationFunction = FunctionFactory.GetActivationFunction(eActivationFunc.Sigmoid);
             _weightAdjustFunction = FunctionFactory.GetWeightAdjustFunction(eWeightAdjustment.Simple);
             _getRandom = (() =>
@@ -38,7 +39,7 @@ namespace NeuralNetTest
             });
 
             _inputNodes = new InputLayer();
-            _hiddenNodes = new List<HiddenNode>[_hiddenLayerCount];            
+            _hiddenNodes = new List<HiddenNode>[_hiddenLayerInitialCount];            
             _outputNodes = new OutputLayer();
         }
 
@@ -50,25 +51,41 @@ namespace NeuralNetTest
             _weightAdjustFunction = weightAdjustmentFunction;
         }
 
+        /// <summary>
+        /// Used to create a custom payout for the network by creating and connecting nodes 
+        /// and passing them to the network
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="hidden"></param>
+        /// <param name="output"></param>
+        /// <returns></returns>
+        public Network SetNetwork(InputLayer input, List<HiddenNode>[] hidden, OutputLayer output)
+        {
+            _inputNodes = input;
+            _hiddenNodes = hidden;
+            _outputNodes = output;
+
+            return this;
+        }
         public Network BuildNetwork()
         {
-            for (int i = 0; i < _inputNodeCount; i++)
+            for (int i = 0; i < _inputNodeInitialCount; i++)
             {
                 var inputNode = new InputNode(i);
                 _inputNodes.Add(inputNode);
             }
 
-            for (int i = 0; i < _outPutNodeCount; i++)
+            for (int i = 0; i < _outPutNodeInitialCount; i++)
             {
                 var outputNode = new OutputNode(i, _activationFunction, _weightAdjustFunction);
                 _outputNodes.Add(outputNode);
             }
 
-            for (int i = 0; i < _hiddenLayerCount; i++)
+            for (int i = 0; i < _hiddenLayerInitialCount; i++)
             {
                 _hiddenNodes[i] = new List<HiddenNode>();
 
-                for (int j = 0; j < _hiddenNodePerLayerCount; j++)
+                for (int j = 0; j < _hiddenNodePerLayerInitialCount; j++)
                 {
                     _hiddenNodes[i].Add(new HiddenNode(j, _activationFunction, _weightAdjustFunction, _getRandom));
                 }
@@ -84,25 +101,22 @@ namespace NeuralNetTest
 
             _outputNodes.ForEach((o) =>
             {
-                //if hiddenlayercount is 0 or hiddenNode count is 0 connect input to output layer
-                if (_hiddenLayerCount == 0 || _hiddenNodePerLayerCount == 0)
+                if (_hiddenLayerInitialCount == 0 || _hiddenNodePerLayerInitialCount == 0)
                 {
                     o.AddInputNodes(_inputNodes);
                 }
                 else
                 {
-                    o.AddInputNodes(_hiddenNodes[_hiddenLayerCount - 1]);
+                    o.AddInputNodes(_hiddenNodes[_hiddenLayerInitialCount - 1]);
                 }
             });
-
-
 
             return this;
         }
 
         public Network SetBias(double bias)
         {
-            for(int i =0; i < _hiddenLayerCount; i++)
+            for(int i =0; i < _hiddenNodes.Length; i++)
             {
                 _hiddenNodes[i].ForEach((h) =>
                 {
@@ -149,7 +163,18 @@ namespace NeuralNetTest
 
             return this;
         }
+        public void Calculate(Input input)
+        {
+            _inputNodes.SetInput(input.InputValues);
+
+            _outputNodes.ForEach((o) =>
+            {
+                o.CalculateOutput();
+            });
+        }
         public IEnumerable<IInputNode> InputNodes => _inputNodes;
         public IEnumerable<BaseOutputNode> OutputNodes => _outputNodes;
+
+        public IEnumerable<Input> InputValues => _inputs;
     }
 }
