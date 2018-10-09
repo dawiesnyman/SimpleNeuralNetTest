@@ -35,6 +35,10 @@ namespace NeuralNetTest.Layers
             _inputNodes.Add(inputNode);
         }
 
+        public void ForEach(Action<IInputNode> action)
+        {
+            _inputNodes.ForEach(action);
+        }
         public InputLayer SetInput(double[] input)
         {
             if (input.Length != _inputNodes.Count)

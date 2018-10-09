@@ -60,7 +60,12 @@ namespace NeuralNetTest.Tests
 
             network.Calculate(new Input() { ID = 9, InputValues = new double[] { 0.0, 0.0, 0.0 }, OutputValues = new double[] { 0.0 } });
 
-            Assert.IsTrue(network.OutputNodes.First().Output > 0.5);
+            Assert.IsTrue(network.OutputNodes.First().Output < 0.2);
+
+
+            network.Calculate(new Input() { ID = 10, InputValues = new double[] { 1.0, 1.0, 1.0 }, OutputValues = new double[] { 1.0 } });
+
+            Assert.IsTrue(network.OutputNodes.First().Output > 0.8);
         }
 
         [TestMethod()]

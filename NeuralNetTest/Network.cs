@@ -39,7 +39,7 @@ namespace NeuralNetTest
             });
 
             _inputNodes = new InputLayer();
-            _hiddenNodes = new List<HiddenNode>[_hiddenLayerInitialCount];            
+            _hiddenNodes = new List<HiddenNode>[_hiddenLayerInitialCount];
             _outputNodes = new OutputLayer();
         }
 
@@ -90,7 +90,14 @@ namespace NeuralNetTest
                     _hiddenNodes[i].Add(new HiddenNode(j, _activationFunction, _weightAdjustFunction, _getRandom));
                 }
 
-                if(i > 0)
+                if (i == 0)
+                {
+                    _hiddenNodes[i].ForEach((o) =>
+                    {
+                        o.AddInputNodes(_inputNodes);
+                    });
+                }
+                else
                 {
                     _hiddenNodes[i].ForEach((o) =>
                     {
@@ -116,7 +123,7 @@ namespace NeuralNetTest
 
         public Network SetBias(double bias)
         {
-            for(int i =0; i < _hiddenNodes.Length; i++)
+            for (int i = 0; i < _hiddenNodes.Length; i++)
             {
                 _hiddenNodes[i].ForEach((h) =>
                 {
@@ -167,8 +174,16 @@ namespace NeuralNetTest
         {
             _inputNodes.SetInput(input.InputValues);
 
+            for (int i = 0; i < _hiddenNodes.Length; i++)
+            {
+                _hiddenNodes[i].ForEach((h) =>
+                {
+                    h.CalculateOutput();
+                });
+            }
             _outputNodes.ForEach((o) =>
             {
+                //o.SetInput(input);
                 o.CalculateOutput();
             });
         }
