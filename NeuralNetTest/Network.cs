@@ -1,10 +1,10 @@
-﻿using NeuralNetTest.Functions;
-using NeuralNetTest.Layers;
-using NeuralNetTest.Nodes;
+﻿using NeuralNet.Functions;
+using NeuralNet.Layers;
+using NeuralNet.Nodes;
 using System;
 using System.Collections.Generic;
 
-namespace NeuralNetTest
+namespace NeuralNet
 {
     public class Network
     {
@@ -157,12 +157,24 @@ namespace NeuralNetTest
                     _inputNodes.SetInput(_inputs[i.ID].InputValues);
                     _outputNodes.SetExpectedOutput(_inputs[i.ID].OutputValues);
 
-                    int index = 0;
+
+                    
+
+                    int outPutIndex = 0;
 
                     _outputNodes.ForEach((o) =>
                     {
+                        for (int y = 0; y < _hiddenNodes.Length; y++)
+                        {
+                            _hiddenNodes[y].ForEach((h) =>
+                            {
+                                h.CalculateOutput();
+                                h.AdjustWeights(_outputNodes.GetExpectedOutput(outPutIndex));
+                            });
+                        }
+
                         o.CalculateOutput();
-                        o.AdjustWeights(_outputNodes.GetExpectedOutput(index++));
+                        o.AdjustWeights(_outputNodes.GetExpectedOutput(outPutIndex++));
                     });
 
                 });

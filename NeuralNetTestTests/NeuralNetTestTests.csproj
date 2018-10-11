@@ -64,9 +64,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NeuralNetTest\NeuralNetTest.csproj">
+    <ProjectReference Include="..\NeuralNetTest\NeuralNet.csproj">
       <Project>{5F100B5E-C86E-48E8-B27B-06B5878FF50B}</Project>
-      <Name>NeuralNetTest</Name>
+      <Name>NeuralNet</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

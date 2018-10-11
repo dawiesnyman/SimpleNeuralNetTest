@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace NeuralNetTest.Nodes
+namespace NeuralNet.Nodes
 {
     public abstract class BaseOutputNode : BaseNode
     {
@@ -65,7 +65,7 @@ namespace NeuralNetTest.Nodes
         {
             if(input.Length != _inputNodes.Count)
             {
-                throw new Exception("Input array lengt does not equal the input nodes");
+                throw new Exception("Input array lengte does not equal the input nodes");
             }
 
             for(int i = 0; i < input.Length; i++)

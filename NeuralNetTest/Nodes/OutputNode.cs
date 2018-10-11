@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NeuralNetTest.Nodes
+namespace NeuralNet.Nodes
 {
     public class OutputNode : BaseOutputNode
     {

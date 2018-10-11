@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NeuralNetTest.Layers
+namespace NeuralNet.Layers
 {
     public class Input
     {

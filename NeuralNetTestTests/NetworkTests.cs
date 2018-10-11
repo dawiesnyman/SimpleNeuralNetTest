@@ -1,14 +1,14 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NeuralNetTest;
-using NeuralNetTest.Layers;
-using NeuralNetTest.Nodes;
+using NeuralNet;
+using NeuralNet.Layers;
+using NeuralNet.Nodes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NeuralNetTest.Tests
+namespace NeuralNet.Tests
 {
     [TestClass()]
     public class NetworkTests
@@ -20,8 +20,11 @@ namespace NeuralNetTest.Tests
 
             network.BuildNetwork();
 
+            Assert.AreEqual(3, network.InputNodes.Count());
 
-            Assert.Fail();
+            Assert.AreEqual(1, network.OutputNodes.Count());
+
+            Assert.AreEqual(3, network.OutputNodes.First().InputNodes.Count());
         }
 
         [TestMethod()]
@@ -34,11 +37,11 @@ namespace NeuralNetTest.Tests
                 new Input(){ ID = 0, InputValues = new double[] { 0.0, 1.0, 1.0 }, OutputValues = new double[] { 0.0 } }
             };
 
-            var network = new Network(3, 1, 1, 3)
+            var network = new Network(3, 1)
+                .BuildNetwork()
                 .SetBias(-2)
-                .SetInputs(input);
-
-            Assert.Fail();
+                .SetInputs(input)
+                .Train(10000);
         }
 
         [TestMethod()]
@@ -54,18 +57,18 @@ namespace NeuralNetTest.Tests
 
 
             network.BuildNetwork()
-                .SetBias(-2.0)
+                .SetBias(-3.0)
                 .SetInputs(inputs)
                 .Train(100000);
 
             network.Calculate(new Input() { ID = 9, InputValues = new double[] { 0.0, 0.0, 0.0 }, OutputValues = new double[] { 0.0 } });
 
-            Assert.IsTrue(network.OutputNodes.First().Output < 0.2);
+            Assert.IsTrue(network.OutputNodes.First().Output < 0.3);
 
 
             network.Calculate(new Input() { ID = 10, InputValues = new double[] { 1.0, 1.0, 1.0 }, OutputValues = new double[] { 1.0 } });
 
-            Assert.IsTrue(network.OutputNodes.First().Output > 0.8);
+            Assert.IsTrue(network.OutputNodes.First().Output > 0.9);
         }
 
         [TestMethod()]

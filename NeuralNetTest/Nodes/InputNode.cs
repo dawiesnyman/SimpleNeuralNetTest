@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace NeuralNetTest.Nodes
+namespace NeuralNet.Nodes
 {
     public class InputNode : BaseNode, IInputNode
     {

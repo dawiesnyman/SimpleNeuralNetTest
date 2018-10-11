@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NeuralNetTest.Nodes
+namespace NeuralNet.Nodes
 {
     public interface IBiasNode
     {

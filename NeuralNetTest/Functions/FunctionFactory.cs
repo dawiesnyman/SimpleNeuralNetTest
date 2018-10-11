@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NeuralNetTest.Functions
+namespace NeuralNet.Functions
 {
     public class FunctionFactory
     {

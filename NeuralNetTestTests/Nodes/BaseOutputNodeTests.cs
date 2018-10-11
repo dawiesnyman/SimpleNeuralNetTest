@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NeuralNetTest.Functions;
-using NeuralNetTest.Layers;
-using NeuralNetTest.Nodes;
+using NeuralNet.Functions;
+using NeuralNet.Layers;
+using NeuralNet.Nodes;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NeuralNetTest.Nodes.Tests
+namespace NeuralNet.Nodes.Tests
 {
     [TestClass()]
     public class BaseOutputNodeTests
@@ -175,6 +175,10 @@ namespace NeuralNetTest.Nodes.Tests
 
             for (int x = 0; x < 100000; x++)
             {
+                hiddenNodes.ForEach((h) =>
+                {
+                    h.CalculateOutput();
+                });
                 outnode.SetInput(new double[] { 0.0, 0.0, 1.0 });
                 outnode.CalculateOutput();
                 outnode.AdjustWeights(0);

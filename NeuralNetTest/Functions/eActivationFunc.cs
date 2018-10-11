@@ -1,4 +1,4 @@
-﻿namespace NeuralNetTest.Functions
+﻿namespace NeuralNet.Functions
 {
     public enum eActivationFunc
     {

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2036
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeuralNetTest", "NeuralNetTest\NeuralNetTest.csproj", "{5F100B5E-C86E-48E8-B27B-06B5878FF50B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeuralNet", "NeuralNetTest\NeuralNet.csproj", "{5F100B5E-C86E-48E8-B27B-06B5878FF50B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeuralNetTestTests", "NeuralNetTestTests\NeuralNetTestTests.csproj", "{DD99B122-3480-492A-B634-111B30647FAE}"
 EndProject

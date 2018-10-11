@@ -1,4 +1,4 @@
-﻿using NeuralNetTest.Nodes;
+﻿using NeuralNet.Nodes;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NeuralNetTest.Layers
+namespace NeuralNet.Layers
 {
     public class InputLayer : IEnumerable<IInputNode>
     {
