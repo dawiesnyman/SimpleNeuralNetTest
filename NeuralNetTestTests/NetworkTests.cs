@@ -1,14 +1,14 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NeuralNet;
-using NeuralNet.Layers;
-using NeuralNet.Nodes;
+using Anna;
+using Anna.Layers;
+using Anna.Nodes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NeuralNet.Tests
+namespace Anna.Tests
 {
     [TestClass()]
     public class NetworkTests

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NeuralNet.Nodes
+namespace Anna.Nodes
 {
     public interface IBaseNode
     {

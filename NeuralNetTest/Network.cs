@@ -1,10 +1,11 @@
-﻿using NeuralNet.Functions;
-using NeuralNet.Layers;
-using NeuralNet.Nodes;
+﻿using Anna.Functions;
+using Anna.Layers;
+using Anna.Nodes;
+using NeuralNet.Models;
 using System;
 using System.Collections.Generic;
 
-namespace NeuralNet
+namespace Anna
 {
     public class Network
     {
@@ -15,7 +16,7 @@ namespace NeuralNet
         private readonly int _outPutNodeInitialCount;
 
         private readonly Func<double, double> _activationFunction;
-        private readonly Func<double, double, double, double> _weightAdjustFunction;
+        private readonly Func<TrainingCalcModel, double> _weightAdjustFunction;
         private readonly Random _random = new Random();
 
         private Func<double> _getRandom;
@@ -44,7 +45,7 @@ namespace NeuralNet
         }
 
         public Network(int inputNodeCount, int hiddenNodesPerLayerCount, int hiddenLayerCount, int outPutNodeCount,
-            Func<double, double> activationFunction, Func<double, double, double, double> weightAdjustmentFunction)
+            Func<double, double> activationFunction, Func<TrainingCalcModel, double> weightAdjustmentFunction)
             : this(inputNodeCount, outPutNodeCount)
         {
             _activationFunction = activationFunction;
@@ -157,9 +158,6 @@ namespace NeuralNet
                     _inputNodes.SetInput(_inputs[i.ID].InputValues);
                     _outputNodes.SetExpectedOutput(_inputs[i.ID].OutputValues);
 
-
-                    
-
                     int outPutIndex = 0;
 
                     _outputNodes.ForEach((o) =>
@@ -177,7 +175,9 @@ namespace NeuralNet
                         o.AdjustWeights(_outputNodes.GetExpectedOutput(outPutIndex++));
                     });
 
+                    Console.Write("Input: {0}\n", i.ID);
                 });
+                Console.Write("Cycle: {0}", x);
             }
 
             return this;

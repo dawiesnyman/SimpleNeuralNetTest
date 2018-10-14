@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2036
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeuralNet", "NeuralNetTest\NeuralNet.csproj", "{5F100B5E-C86E-48E8-B27B-06B5878FF50B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anna.Common", "NeuralNetTest\Anna.Common.csproj", "{5F100B5E-C86E-48E8-B27B-06B5878FF50B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeuralNetTestTests", "NeuralNetTestTests\NeuralNetTestTests.csproj", "{DD99B122-3480-492A-B634-111B30647FAE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anna.Mnist", "Anna.Mnist\Anna.Mnist.csproj", "{56238275-78CB-40B4-811D-2E24918C87F8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{DD99B122-3480-492A-B634-111B30647FAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD99B122-3480-492A-B634-111B30647FAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DD99B122-3480-492A-B634-111B30647FAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56238275-78CB-40B4-811D-2E24918C87F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56238275-78CB-40B4-811D-2E24918C87F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56238275-78CB-40B4-811D-2E24918C87F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56238275-78CB-40B4-811D-2E24918C87F8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

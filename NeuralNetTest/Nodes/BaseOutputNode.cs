@@ -1,7 +1,8 @@
-﻿using System;
+﻿using NeuralNet.Models;
+using System;
 using System.Collections.Generic;
 
-namespace NeuralNet.Nodes
+namespace Anna.Nodes
 {
     public abstract class BaseOutputNode : BaseNode
     {
@@ -9,11 +10,11 @@ namespace NeuralNet.Nodes
         private readonly List<IInputNode> _inputNodes;
         private readonly List<BaseOutputNode> _outNodes;
         private readonly Func<double, double> _activationFunction;
-        private Func<double, double, double, double> _weightAdjustmentFunction;
+        private Func<TrainingCalcModel, double> _weightAdjustmentFunction;
         private Func<double> _getRandom;
 
         public BaseOutputNode(int address, Func<double, double> activationFunction, 
-            Func<double, double, double, double> weightAdjustmentFunction,
+            Func<TrainingCalcModel, double> weightAdjustmentFunction,
             Func<double> getRandom = null) : base(address)
         {
             if (getRandom == null) { _getRandom = (() => { return _random.NextDouble(); }); }
@@ -35,19 +36,21 @@ namespace NeuralNet.Nodes
                 //{
                 //    o.CalculateOutput();
                 //}
-
-                total += (i.Weights[Address] * i.Input);
+                if(i.Input != 0.0) 
+                    total += (i.Weights[Address] * i.Input);
             }
             total += Bias;
 
-            Output = _activationFunction(total);
+            if(total != 0.0)
+                Output = _activationFunction(total);
         }
         public void AdjustWeights(double expected)
         {
+            return;
             double error = expected - Output;
             _inputNodes.ForEach((i) =>
             {
-                i.Weights[Address] += _weightAdjustmentFunction(i.Input, Output, error);
+                i.Weights[Address] += _weightAdjustmentFunction(new TrainingCalcModel() { Input = i.Input, ActualOutput = Output, Error = error, Weight = i.Weights[Address] });
 
 
                 var o = i as BaseOutputNode;

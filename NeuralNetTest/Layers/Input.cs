@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NeuralNet.Layers
+namespace Anna.Layers
 {
     public class Input
     {

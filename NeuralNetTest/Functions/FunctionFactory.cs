@@ -1,18 +1,32 @@
-﻿using System;
+﻿using NeuralNet.Models;
+using System;
 
-namespace NeuralNet.Functions
+namespace Anna.Functions
 {
     public class FunctionFactory
     {
-        public static Func<double, double, double, double> GetWeightAdjustFunction(eWeightAdjustment weightAdjustment)
+        private readonly double _trainingRate;
+        private static FunctionFactory _instance;
+
+        private FunctionFactory(double trainingRate = 0.0)
+        {
+            _trainingRate = trainingRate;
+        }
+
+        public static Func<TrainingCalcModel, double> GetWeightAdjustFunction(eWeightAdjustment weightAdjustment)
         {
             switch (weightAdjustment)
             {
+                case eWeightAdjustment.SimpleGradient:
+                    return new Func<TrainingCalcModel, double>((model) =>
+                    {
+                        return model.Weight + model.TrainingRate * (model.ExpectedOutput - model.ActualOutput) * model.Input;
+                    });
                 case eWeightAdjustment.Simple:
                 default:
-                    return new Func<double, double, double, double>((i, o, e) =>
+                    return new Func<TrainingCalcModel, double>((m) =>
                     {
-                        return e * i * o * (1 - o);
+                        return m.Error * m.Input * m.ActualOutput * (1 - m.ActualOutput);
                     });
             }
         }

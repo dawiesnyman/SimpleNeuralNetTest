@@ -1,7 +1,8 @@
-﻿namespace NeuralNet.Functions
+﻿namespace Anna.Functions
 {
     public enum eWeightAdjustment
     { 
-        Simple = 0
+        Simple = 0,
+        SimpleGradient =1
     }
 }

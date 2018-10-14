@@ -1,4 +1,4 @@
-﻿using NeuralNet.Nodes;
+﻿using Anna.Nodes;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NeuralNet.Layers
+namespace Anna.Layers
 {
     public class InputLayer : IEnumerable<IInputNode>
     {

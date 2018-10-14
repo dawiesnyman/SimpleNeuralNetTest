@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace NeuralNet.Nodes
+namespace Anna.Nodes
 {
     public class InputNode : BaseNode, IInputNode
     {

@@ -1,4 +1,4 @@
-﻿namespace NeuralNet.Functions
+﻿namespace Anna.Functions
 {
     public enum eActivationFunc
     {

@@ -1,11 +1,12 @@
-﻿using System;
+﻿using NeuralNet.Models;
+using System;
 
-namespace NeuralNet.Nodes
+namespace Anna.Nodes
 {
     public class OutputNode : BaseOutputNode
     {
         public OutputNode(int address, Func<double, double> activationFunction, 
-            Func<double, double, double, double> weightAdjustmentFunction,
+            Func<TrainingCalcModel, double> weightAdjustmentFunction,
             Func<double> getRandom = null) 
             : base(address, activationFunction, weightAdjustmentFunction, getRandom)
         {

@@ -1,15 +1,16 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NeuralNet.Functions;
-using NeuralNet.Layers;
-using NeuralNet.Nodes;
+using Anna.Functions;
+using Anna.Layers;
+using Anna.Nodes;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NeuralNet.Models;
 
-namespace NeuralNet.Nodes.Tests
+namespace Anna.Nodes.Tests
 {
     [TestClass()]
     public class BaseOutputNodeTests
@@ -23,9 +24,9 @@ namespace NeuralNet.Nodes.Tests
             // 0 1 1 => 0
             // test
             // 1 0 0 => ?
-            var weightAdjust = new Func<double, double, double, double>((i, o, e) =>
+            var weightAdjust = new Func<TrainingCalcModel, double>((m) =>
             {
-                return e * i * o * (1 - o);
+                return m.Error * m.Input * m.ActualOutput * (1 - m.ActualOutput);
             });
 
             var inputNodes1 = new InputLayer()
@@ -79,9 +80,9 @@ namespace NeuralNet.Nodes.Tests
             // 0 1 1 => 0
             // test
             // 1 0 0 => ?
-            var weightAdjust = new Func<double, double, double, double>((i, o, e) =>
+            var weightAdjust = new Func<TrainingCalcModel, double>((m) =>
             {
-                return e * i * o * (1 - o);
+                return m.Error * m.Input * m.ActualOutput * (1 - m.ActualOutput);
             });
 
             var inputNodes1 = new List<InputNode>();
@@ -134,9 +135,9 @@ namespace NeuralNet.Nodes.Tests
             Func<double> getRandom = (() => { return r.NextDouble(); });
 
 
-            var weightAdjust = new Func<double, double, double, double>((i, o, e) =>
+            var weightAdjust = new Func<TrainingCalcModel, double>((m) =>
                 {
-                    return e * i * o * (1 - o);
+                    return m.Error * m.Input * m.ActualOutput * (1 - m.ActualOutput);
                 });
             var sigFunction = FunctionFactory.GetActivationFunction(eActivationFunc.Sigmoid);
             var step =  new Func<double, double>((z) =>

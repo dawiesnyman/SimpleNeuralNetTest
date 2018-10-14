@@ -1,12 +1,13 @@
-﻿using System;
+﻿using NeuralNet.Models;
+using System;
 using System.Collections.Generic;
 
-namespace NeuralNet.Nodes
+namespace Anna.Nodes
 {
     public class HiddenNode : BaseOutputNode, IInputNode
     {
         public HiddenNode(int address, Func<double, double> activationFunction, 
-            Func<double, double, double, double> weightAdjustmentFunction,
+            Func<TrainingCalcModel, double> weightAdjustmentFunction,
             Func<double> getRandom = null) 
             : base(address, activationFunction, weightAdjustmentFunction, getRandom)
         {

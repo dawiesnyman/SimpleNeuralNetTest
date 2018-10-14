@@ -52,6 +52,7 @@
     <Compile Include="Layers\Input.cs" />
     <Compile Include="Layers\InputLayer.cs" />
     <Compile Include="Layers\OutputLayer.cs" />
+    <Compile Include="Models\TrainingCalcModel.cs" />
     <Compile Include="Network.cs" />
     <Compile Include="Nodes\BaseNode.cs" />
     <Compile Include="Nodes\HiddenNode.cs" />
