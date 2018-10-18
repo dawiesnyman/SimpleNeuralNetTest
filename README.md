@@ -23,7 +23,9 @@ As you can see the pattern is that the answer should be the same as "Input 1".
 ## Next steps
 1. Make it easier to load values with expected output
 2. Change weight adjustment to have option of using total weight, gradient etc (as if I know what I'm talking about :)
-2. Ability to load and save network training (weights)
+3. Ability to load and save network training (weights)
 
+
+https://archive.ics.uci.edu/ml/datasets/Iris
 
 https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#tables
