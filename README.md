@@ -25,7 +25,8 @@ As you can see the pattern is that the answer should be the same as "Input 1".
 2. Change weight adjustment to have option of using total weight, gradient etc (as if I know what I'm talking about :)
 3. Ability to load and save network training (weights)
 
-
+##Anna.Iris 
+This uses the well known Iris dataset to predict a class. It work without hidden layers but fails when I add a hidden layer. -> back to the drawing board...
 https://archive.ics.uci.edu/ml/datasets/Iris
 
 https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#tables

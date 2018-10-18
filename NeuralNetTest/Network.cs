@@ -139,9 +139,9 @@ namespace Anna
 
             return this;
         }
-        public Network SetInputs(List<Input> input)
+        public Network SetInputs(IEnumerable<Input> input)
         {
-            _inputs = input;
+            _inputs = new List<Input>(input);
 
             return this;
         }
@@ -175,9 +175,9 @@ namespace Anna
                         o.AdjustWeights(_outputNodes.GetExpectedOutput(outPutIndex++));
                     });
 
-                    Console.Write("Input: {0}\n", i.ID);
+                    //Console.Write("Input: {0}\n", i.ID);
                 });
-                Console.Write("Cycle: {0}", x);
+                Console.Write("Cycle: {0}\n", x);
             }
 
             return this;

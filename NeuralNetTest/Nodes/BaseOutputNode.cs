@@ -46,7 +46,6 @@ namespace Anna.Nodes
         }
         public void AdjustWeights(double expected)
         {
-            return;
             double error = expected - Output;
             _inputNodes.ForEach((i) =>
             {
